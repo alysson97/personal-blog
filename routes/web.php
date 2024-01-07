@@ -15,18 +15,14 @@ use App\Http\Controllers\BlogController;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', [BlogController::class, "index"])->name("index");
 
-Route::get('/signin', function(){
-    return view('account.signin');
-});
+Route::get('/signin', [BlogController::class, "login"])->name("account.signin");
 
-Route::get('/signup', function(){
-    return view('account.signup');
-});
+Route::get('/signup', [BlogController::class, "cadastroUsuario"])->name("account.signup");
 
 Route::get("/services/cadastroUsuario", [BlogController::class, "cadastroUsuario"])->name("cadastroUsuario");
+
+Route::post("/verificaLogin", [BlogController::class, "verificaLogin"])->name("verificaLogin");
 
 Route::post("/processaCadastro", [BlogController::class,"processaCadastro"])->name("processaCadastro");

@@ -11,21 +11,22 @@ use Illuminate\Http\Request;
 class BlogController extends Controller
 {
     //
-    public function login()
-  {
+  public function index(){
+    return view('index');
+  }
+  public function login(){
     return view('account.signin');
   }
-  public function verificaLogin(Request $request)
-  {
+  public function verificaLogin(Request $request){
     if ($request->isMethod('post')) {
       $credentials = $request->only('email', 'password');
       $usuario = Usuario::verificaUsuario($credentials['email'], $credentials['password']);
 
-      if ($usuario) {
+      if ($usuario){
         Auth::login($usuario);
         session(['usuario' => $usuario]);
         return redirect()->route("index");
-      } else {
+      }else{
         return redirect()->route("account.signin")->with("error", "usuario não encontrado ou credenciais incorretas");
       }
     }
@@ -42,16 +43,16 @@ class BlogController extends Controller
       'name' => 'required',
       'email' => 'required|email|unique:usuario',
       'password' => 'required|min:6',
-      'confiirmPassword' => 'required|same:password',
+      'passwordConfirm' => 'required|same:password',
     ]);
     if ($request->isMethod('post')) {
       $name = $request->input('name');
       $email = $request->input('email');
       $password = $request->input('password');
-      $confirmPassword = $request->input('confiirmPassword');
+      $passwordConfirm = $request->input('passwordConfirm');
     }
 
-    if ($password == $confirmPassword) {
+    if ($password == $passwordConfirm) {
       try {
         Usuario::cadastrarUsuario($name, $email, $password);
         return redirect()->route('index')->with('success', 'Usuario cadastrado com sucesso');

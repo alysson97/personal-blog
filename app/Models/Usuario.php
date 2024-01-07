@@ -32,10 +32,10 @@ class Usuario extends Model implements AuthenticatableContract{
   public function getRememberTokenName(){
     // Implement if needed
   }
-  protected $table = "user";
+  protected $table = "usuario";
   protected $fillable = ['email', 'name', 'password'];
 
-  public static function verificauser($email, $password){
+  public static function verificaUsuario($email, $password){
 
     $user = self::where("email", $email)->first();
     if ($user && Hash::check($password, $user->password)) {
