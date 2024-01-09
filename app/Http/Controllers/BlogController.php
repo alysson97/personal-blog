@@ -14,7 +14,14 @@ class BlogController extends Controller
 {
     //
   public function index(){
-    return view('index');
+    if(!Auth::check()){
+      $user = (object) ['id' => 0];
+
+      return view('index', ['user'=> $user]);
+    }
+    $id = Auth::id();
+    $user = Usuario::find($id);
+    return view('index', ['user' => $user]); 
   }
   public function login(){
     return view('account.signin');
@@ -66,7 +73,11 @@ class BlogController extends Controller
     }
 }
 
-  public function createPost(Request $request){
+  public function createPost(Request $request, $id){
+    // === doesnt work
+    if($id == 0 || $id == null){ return redirect()->route("account.signin");}
+    /* echo $id;
+    dd($id); */
     if ($request->isMethod('post')) {
       $title = $request->input('postTitle');
       $message = $request->input('message');

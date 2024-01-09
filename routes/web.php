@@ -27,4 +27,4 @@ Route::post("/verificaLogin", [BlogController::class, "verificaLogin"])->name("v
 
 Route::post("/processaCadastro", [BlogController::class,"processaCadastro"])->name("processaCadastro");
 
-Route::post("/create-post", [BlogController::class, "createPost"])->name("createPost");
+Route::post("/create-post/{id}", [BlogController::class, "createPost"])->name("createPost");
