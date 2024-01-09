@@ -12,7 +12,7 @@
 <body class="vh-100">
   <header class="vw-100 d-flex justify-content-between align-items-center py-2">
     <div class="home">
-      <div class="logo">Personal-blog</div>
+      <div class="logo"><a href="/" class="text-decoration-none text-light">Personal-blog</a></div>
     </div>
     <div class="account col-2">
       

@@ -32,7 +32,7 @@ class Usuario extends Model implements AuthenticatableContract{
   public function getRememberTokenName(){
     // Implement if needed
   }
-  protected $table = "usuario";
+  protected $table = "user";
   protected $fillable = ['email', 'name', 'password'];
 
   public static function verificaUsuario($email, $password){

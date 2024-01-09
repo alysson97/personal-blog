@@ -26,3 +26,5 @@ Route::get("/services/cadastroUsuario", [BlogController::class, "cadastroUsuario
 Route::post("/verificaLogin", [BlogController::class, "verificaLogin"])->name("verificaLogin");
 
 Route::post("/processaCadastro", [BlogController::class,"processaCadastro"])->name("processaCadastro");
+
+Route::post("/create-post", [BlogController::class, "createPost"])->name("createPost");

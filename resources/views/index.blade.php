@@ -19,11 +19,14 @@
 
   <!--Posts-->
   <div class="post-wall col-8 container d-flex flex-column justify-content-center align-items-center">
-    <div class="row col-8 pb-4">
-      <textarea class="mb-2" name="Post" id="" cols="5" rows="5" placeholder="Write here..."></textarea>
-      <input class="mb-1" type="file" name="image" id="">
+    <form class="row col-8 pb-4" action="/create-post" method="POST">
+      @csrf
+      <input type="text" class="mb-2" name="title" id="postTitle">
+      <textarea class="mb-2" name="message" id="message" cols="5" rows="5" placeholder="Write here..."></textarea>
+      <input class="mb-1" type="file" name="image" id="post-image">
       <button class="col-2 my-1">Post</button>
-    </div>
+    </form>
+
     <div class="card row col-8 p-3" style="background-color: #ffffff2a">
       <div class="row d-flex justify-between">
         <img src="desorganizado.png" alt="" class="border-radius col-2" style="">
@@ -36,7 +39,8 @@
       </div>
       <div class="row">
         <p>comments</p>
-        <button>like</button> <button>dislike</button>
+        <button class="col-1">like</button>
+        <button class="col-2">dislike</button> 
       </div>
     </div>
   </div>

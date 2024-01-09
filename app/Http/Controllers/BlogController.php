@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 use App\Models\Usuario;
+use App\Models\Posts;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 use Illuminate\Http\Request;
+use PhpParser\Node\Expr\Throw_;
 
 class BlogController extends Controller
 {
@@ -63,5 +65,20 @@ class BlogController extends Controller
       return redirect()->route("account.signup")->with("erro", 1);
     }
 }
-    
+
+  public function createPost(Request $request){
+    if ($request->isMethod('post')) {
+      $title = $request->input('postTitle');
+      $message = $request->input('message');
+      $image = $request->input('image');
+    }
+    try{
+      Posts::createPost($title, $message, $image);
+      return redirect()->route("index");
+    }catch(\Throwable $th){
+      //return redirect()->route("index")->with("erro", 1);
+      throw $th;
+    }
+  }
 }
+
