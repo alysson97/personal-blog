@@ -21,7 +21,7 @@
   <div class="post-wall col-8 container d-flex flex-column justify-content-center align-items-center">
     <form class="row col-8 pb-4" action="/create-post/{{$user->id}}" method="POST">
       @csrf
-      <input type="text" class="mb-2" name="title" id="postTitle" placeholder="title">
+      <input type="text" class="mb-2" name="postTitle" id="postTitle" placeholder="title">
       <textarea class="mb-2" name="message" id="message" cols="5" rows="5" placeholder="Write here..."></textarea>
       <input class="mb-1" type="file" name="image" id="post-image">
       <button class="col-2 my-1">Post</button>

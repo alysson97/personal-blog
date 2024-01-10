@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Usuario;
+use App\Models\User;
 use App\Models\Posts;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,20 +16,31 @@ class BlogController extends Controller
   public function index(){
     if(!Auth::check()){
       $user = (object) ['id' => 0];
-
-      return view('index', ['user'=> $user]);
+      $hasSession = false;
+      return view('index', [
+        'user'=> $user,
+        'hasSession' => $hasSession
+    ]);
     }
-    $id = Auth::id();
-    $user = Usuario::find($id);
-    return view('index', ['user' => $user]); 
+    //$id = Auth::id();
+    //$user = User::find($id);
+    $user = auth()->user();
+    $hasSession = true;
+    //dd(Auth::check());
+    return view('index', [
+      'user' => $user
+      ,'hasSession' => $hasSession
+    ]); 
   }
-  public function login(){
+  public function login(Request $request){
+    if(Auth::check()) return redirect()->route("index");
+    if($request->session()->has('user')); dd(Auth::id());
     return view('account.signin');
   }
   public function verificaLogin(Request $request){
     if ($request->isMethod('post')) {
       $credentials = $request->only('email', 'password');
-      $usuario = Usuario::verificaUsuario($credentials['email'], $credentials['password']);
+      $usuario = User::verificaUsuario($credentials['email'], $credentials['password']);
 
       if ($usuario){
         Auth::login($usuario);
@@ -50,7 +61,7 @@ class BlogController extends Controller
 
     $this->validate($request, [
       'name' => 'required',
-      'email' => 'required|email|unique:usuario',
+      'email' => 'required|email|unique:user',
       'password' => 'required|min:6',
       'passwordConfirm' => 'required|same:password',
     ]);
@@ -63,7 +74,7 @@ class BlogController extends Controller
 
     if ($password == $passwordConfirm) {
       try {
-        Usuario::cadastrarUsuario($name, $email, $password);
+        User::cadastrarUsuario($name, $email, $password);
         return redirect()->route('index')->with('success', 'Usuario cadastrado com sucesso');
       } catch (\Exception $e) {
         echo "Error: " . $e->getMessage();
@@ -75,16 +86,17 @@ class BlogController extends Controller
 
   public function createPost(Request $request, $id){
     // === doesnt work
-    if($id == 0 || $id == null){ return redirect()->route("account.signin");}
+    if($id == 0 || $id == null){ dd($id); return redirect()->route("account.signin");}
     /* echo $id;
     dd($id); */
     if ($request->isMethod('post')) {
       $title = $request->input('postTitle');
       $message = $request->input('message');
       $image = $request->input('image');
+      if($request->input('image') == null) $image = "";
     }
     try{
-      Posts::createPost($title, $message, $image);
+      Posts::createPost($id, $title, $message, $image);
       return redirect()->route("index");
     }catch(\Throwable $th){
       //return redirect()->route("index")->with("erro", 1);

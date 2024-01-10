@@ -8,11 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Posts extends Model
 {
   protected $table = "posts";
-  protected $fillable = ['title', 'message', 'photo'];
+  protected $fillable = ['user_id','title', 'message', 'photo'];
 
-  public static function createPost($title, $message, $image){
+  public static function createPost($id, $title, $message, $image){
     try {
       self::create([
+        "user_id" => $id,
         "title" => $title,
         "message" => $message,
         "photo" => $image

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 
+
 class Usuario extends Model implements AuthenticatableContract{
   // Define the required methods for the Authenticatable contract
   public function getAuthIdentifierName(){
