@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('user');
             $table->string('title');
-            $table->string('message');
+            $table->string('message', 500);
             $table->string('photo');
             $table->integer('likes')->default(0);
             $table->integer('dislikes')->default(0);

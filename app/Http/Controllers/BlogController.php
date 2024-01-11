@@ -14,11 +14,13 @@ class BlogController extends Controller
 {
     //
   public function index(){
+    $fetchData = Posts::all();
     if(!Auth::check()){
       $user = (object) ['id' => 0];
       $hasSession = false;
       return view('index', [
         'user'=> $user,
+        'fetchData' => $fetchData,
         'hasSession' => $hasSession
     ]);
     }
@@ -28,8 +30,9 @@ class BlogController extends Controller
     $hasSession = true;
     //dd(Auth::check());
     return view('index', [
-      'user' => $user
-      ,'hasSession' => $hasSession
+      'user' => $user,
+      'fetchData' => $fetchData,
+      'hasSession' => $hasSession
     ]); 
   }
   public function login(Request $request){
@@ -47,13 +50,12 @@ class BlogController extends Controller
       $credentials = $request->only('email', 'password');
       $usuario = User::verificaUsuario($credentials['email'], $credentials['password']);
 
-      if ($usuario){
-        Auth::login($usuario);
-        session(['usuario' => $usuario]);
-        return redirect()->route("index");
-      }else{
+      if (!$usuario){
         return redirect()->route("account.signin")->with("error", "usuario não encontrado ou credenciais incorretas");
       }
+      Auth::login($usuario);
+      session(['usuario' => $usuario]);
+      return redirect()->route("index");
     }
   }
 
