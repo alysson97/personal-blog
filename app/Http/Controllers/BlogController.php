@@ -33,9 +33,14 @@ class BlogController extends Controller
     ]); 
   }
   public function login(Request $request){
+    $hasSession=true;
     if(Auth::check()) return redirect()->route("index");
-    if($request->session()->has('user')); dd(Auth::id());
-    return view('account.signin');
+    if(!$request->session()->has('user')){
+      //dd(Auth::id());
+      $hasSession = false;
+      return view('account.signin',['hasSession'=>$hasSession]);
+    }
+    return view('account.signin',['hasSession'=>$hasSession]);
   }
   public function verificaLogin(Request $request){
     if ($request->isMethod('post')) {
@@ -52,9 +57,16 @@ class BlogController extends Controller
     }
   }
 
-  public function cadastroUsuario(){
-    
-    return view("account.signup");
+  public function cadastroUsuario(Request $request){
+    //separar os métodos login e cadastro em duas classes e fazer um deles herdar esse bloco de código
+    $hasSession=true;
+    if(Auth::check()) return redirect()->route("index");
+    if(!$request->session()->has('user')){
+      //dd(Auth::id());
+      $hasSession = false;
+      return view('account.signup',['hasSession'=>$hasSession]);
+    }
+    return view('account.signup',['hasSession'=>$hasSession]);
   }
 
   public function processaCadastro(Request $request){
