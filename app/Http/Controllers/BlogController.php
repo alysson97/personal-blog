@@ -15,13 +15,15 @@ class BlogController extends Controller
     //
   public function index(){
     $fetchData = Posts::all();
+    $postQtd=3;
     if(!Auth::check()){
       $user = (object) ['id' => 0];
       $hasSession = false;
       return view('index', [
         'user'=> $user,
         'fetchData' => $fetchData,
-        'hasSession' => $hasSession
+        'hasSession' => $hasSession,
+        'postQtd'=> $postQtd
     ]);
     }
     //$id = Auth::id();
@@ -32,7 +34,8 @@ class BlogController extends Controller
     return view('index', [
       'user' => $user,
       'fetchData' => $fetchData,
-      'hasSession' => $hasSession
+      'hasSession' => $hasSession,
+      'postQtd'=> $postQtd
     ]); 
   }
   public function login(Request $request){

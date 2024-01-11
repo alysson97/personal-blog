@@ -9,8 +9,8 @@
   
   <title>@yield('title')</title>
 </head>
-<body class="vh-100">
-  <header class="vw-100 d-flex justify-content-between align-items-center py-2 bg-dark bg-gradient mb-2">
+<body class="">
+  <header class=" d-flex justify-content-between align-items-center py-2 bg-dark bg-gradient mb-2">
     <div class="home">
       <div class="logo"><a href="/" class="text-decoration-none text-light">Personal-blog</a></div>
     </div>

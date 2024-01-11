@@ -45,16 +45,17 @@
       </div>
     </div>
 
-    @foreach ($fetchData as $item)
-        
+
+    
+    @for ($i = 0; $i < (sizeof($fetchData)-(sizeof($fetchData)-$postQtd)); $i++)
       <div class="card row col-8 p-3 mb-3" style="background-color: #ffffff2a">
         <div class="row d-flex justify-between">
           <img src="desorganizado.png" alt="" class="border-radius col-2" style="">
-          <h3 class="col-10">{{$item->title}}</h3>
+          <h3 class="col-10">{{$fetchData[$i]->title}}</h3>
         </div>
         <div class="row">
           <p class="content">
-            {{$item->message}}
+            {{$fetchData[$i]->message}}
           </p>
         </div>
         <div class="row">
@@ -63,7 +64,7 @@
           <button class="col-2">dislike</button> 
         </div>
       </div>
-    @endforeach
+    @endfor
 
   </div>
   
@@ -80,4 +81,30 @@
   </div>
 </main>
 
+<!--working-->
+<script>
+  var postQtd = {{$postQtd}};
+  var windowHeight = window.innerHeight;
+
+  //working
+  window.addEventListener('scroll',()=>{
+    if(windowHeight + window.scrollY >= document.body.offsetHeight){
+    console.log("maxScroll");
+    }
+    console.log(window.innerHeight, window.scrollY, document.body.offsetHeight);
+  });
+
+  
+  
+
+
+  console.log(postQtd);
+  /* const repeatTimeOut = setTimeout(() => {
+    postQtd++;
+    if(postQtd >= {{sizeof($fetchData)}}) clearTimeOut(repeatTimeOut);
+    console.log(postQtd);
+  }, 2000); */
+
+
+</script>
 @stop
