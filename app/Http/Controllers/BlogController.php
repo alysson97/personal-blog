@@ -38,6 +38,13 @@ class BlogController extends Controller
       'postQtd'=> $postQtd
     ]); 
   }
+  public function loadMore($qtd) {
+    
+    $fetchData = Posts::latest()->skip($qtd)->take($qtd)->get();
+
+    // Retorne os dados em formato JSON
+    return response()->json(['fetchData' => $fetchData, 'postQtd' => $qtd]);
+}
   public function login(Request $request){
     $hasSession=true;
     if(Auth::check()) return redirect()->route("index");
