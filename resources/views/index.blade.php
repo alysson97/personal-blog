@@ -117,7 +117,7 @@
     postQtd++;
     if(postQtd >= {{sizeof($fetchData)}}) clearTimeOut(repeatTimeOut);
     console.log(postQtd);
-  }, 2000); */
+  }, 2000); */ 
 
   function renderNewPosts(newPosts){
 
